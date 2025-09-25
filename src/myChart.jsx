@@ -9,7 +9,7 @@ import {
    Title,
    Tooltip,
    Legend,
-   ArcElement,
+   BarElement, // bar chart uchun kerak
 } from "chart.js";
 
 ChartJS.register(
@@ -20,7 +20,7 @@ ChartJS.register(
    Title,
    Tooltip,
    Legend,
-   ArcElement
+   BarElement
 );
 
 const MyChart = () => {
@@ -53,6 +53,7 @@ const MyChart = () => {
             pointRadius: 2,
             tension: 0.4,
          },
+
       ],
    };
 
@@ -77,7 +78,7 @@ const MyChart = () => {
       }
 
       chartInstance.current = new ChartJS(chartRef.current, {
-         type: "doughnut",
+         type: "bar", // 🍀 endi bar chart
          data: {
             labels: xValues,
             datasets: [
@@ -88,8 +89,16 @@ const MyChart = () => {
             ],
          },
          options: {
+            scales: {
+               y: {
+                  beginAtZero: true,
+                  ticks: {
+                     stepSize: 10,
+                  },
+               },
+            },
             plugins: {
-               legend: { display: true },
+               legend: { display: false },
                title: {
                   display: true,
                   text: "World Wine Production 2018",
@@ -102,18 +111,22 @@ const MyChart = () => {
 
    return (
       <>
-         <div style={{
-            maxWidth: "1200px",
-            height: "700px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: "100px",
-            margin: "0 auto", // ortaga keltirish uchun
-         }}>
+         {/* Line chart */}
+         <div
+            style={{
+               maxWidth: "1200px",
+               height: "700px",
+               display: "flex",
+               justifyContent: "center",
+               alignItems: "center",
+               paddingTop: "100px",
+               margin: "0 auto",
+            }}
+         >
             <Line data={data} options={options} />
          </div>
 
+         {/* Bar chart */}
          <div
             style={{
                maxWidth: "1200px",
